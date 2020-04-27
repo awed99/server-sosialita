@@ -250,6 +250,21 @@ class Dompet extends CI_Controller {
 		echo json_encode($resx);
 	}
 
+	public function get_data() {
+		$post = $this->input->post();
+
+   		$this->db->where('id_user', $post['id_user']);
+   		$this->db->where($post['id_field'], $post['id_value']);
+     	$data = $this->db->get($post['tabel'])->row();
+
+		$resx['status'] = 1;
+		$resx['message'] = "";
+		$resx['data'] = $data;
+		$resx['code'] = 0;
+		$resx['redirect'] = '';
+		echo json_encode($resx);
+	}
+
 	public function mutasi_saldo() {
 		$post = $this->input->post();
 

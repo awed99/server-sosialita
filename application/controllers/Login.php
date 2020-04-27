@@ -114,7 +114,7 @@ class Login extends CI_Controller {
 		$res = $this->db->get('user')->row();
 		if ($res) {
 			$resx['status'] = 1;
-			$resx['message'] = "Selamat Akun Pacaran kamu sudah aktif.";
+			$resx['message'] = "Selamat Akun Sosialita kamu sudah aktif.";
 			$resx['data'] = null;
 			$resx['code'] = 0;
 			$resx['redirect'] = 'auth/auth';
@@ -184,40 +184,43 @@ class Login extends CI_Controller {
 			$res = $this->db->insert('user', $data);
 		}
 
-		$status = 3;
-		$redirect = '';
-		$message = "Aktivasi akun dengan kode di email kamu!";
+		// $status = 3;
+		// $redirect = '';
+		// $message = "Aktivasi akun dengan kode di SMS kamu!";
 		
-		if (1 === 1) {
-			$link_activation = site_url('login/activate');
-			$message = '<p><strong>Selamat datang di '.$this->app['name'].'!</strong><br/><br/> Akun Kamu telah terdaftar di aplikasi '.$this->app['name'].'. Tetapi Kamu tidak dapat Login sebelum mengaktifkan akun Kamu. silakan masukan kode di bawah ini untuk mengaktifkan akun Kamu & membuktikan bahwa itu adalah Kamu.</p><br/><b><h2>'.$code.'</h2></b><br/><br/>Copyright &copy; '.$this->app['name'].' '.date('Y');
+		// if (1 === 1) {
+		// 	$link_activation = site_url('login/activate');
+		// 	$message = '<p><strong>Selamat datang di '.$this->app['name'].'!</strong><br/><br/> Akun Kamu telah terdaftar di aplikasi '.$this->app['name'].'. Tetapi Kamu tidak dapat Login sebelum mengaktifkan akun Kamu. silakan masukan kode di bawah ini untuk mengaktifkan akun Kamu & membuktikan bahwa itu adalah Kamu.</p><br/><b><h2>'.$code.'</h2></b><br/><br/>Copyright &copy; '.$this->app['name'].' '.date('Y');
 
-			include "classes/class.phpmailer.php";
-			$mail = new PHPMailer;
-			$mail->IsSMTP();
-			$mail->SMTPSecure = $this->smtp['Ssl'];
-			$mail->Host = $this->smtp['Host']; //hostname masing-masing provider email
-			$mail->SMTPDebug = 0;
-			$mail->Port = $this->smtp['Port'];
-			$mail->SMTPAuth = true;
-			$mail->Username = $this->smtp['Username']; //user email
-			$mail->Password = $this->smtp['Password']; //password email
-			$mail->SetFrom($this->smtp['MailFrom'], $this->smtp['NameFrom']); //set email pengirim
-			$mail->Subject = "Aktivasi Akun ".$this->app['name']; //subyek email
-			$mail->AddAddress($email,$this->app['name']." User"); //tujuan email
-			$mail->MsgHTML($message);
-			if ($mail->Send()) {
-				// echo "Message has been sent";
-				$status = 1;
-				$redirect = "/auth/activate";
-				$message = "Aktivasi akun dengan kode di email kamu!";
-			} else {
-				// echo "<script>alert('Failed to sending message!')</script>";
-				$status = 2;
-				$redirect = '';
-				$message = "Kegagalan Server!";
-			}
-		}
+		// 	include "classes/class.phpmailer.php";
+		// 	$mail = new PHPMailer;
+		// 	$mail->IsSMTP();
+		// 	$mail->SMTPSecure = $this->smtp['Ssl'];
+		// 	$mail->Host = $this->smtp['Host']; //hostname masing-masing provider email
+		// 	$mail->SMTPDebug = 0;
+		// 	$mail->Port = $this->smtp['Port'];
+		// 	$mail->SMTPAuth = true;
+		// 	$mail->Username = $this->smtp['Username']; //user email
+		// 	$mail->Password = $this->smtp['Password']; //password email
+		// 	$mail->SetFrom($this->smtp['MailFrom'], $this->smtp['NameFrom']); //set email pengirim
+		// 	$mail->Subject = "Aktivasi Akun ".$this->app['name']; //subyek email
+		// 	$mail->AddAddress($email,$this->app['name']." User"); //tujuan email
+		// 	$mail->MsgHTML($message);
+		// 	if ($mail->Send()) {
+		// 		// echo "Message has been sent";
+		// 		$status = 1;
+		// 		$redirect = "/auth/activate";
+		// 		$message = "Aktivasi akun dengan kode di email kamu!";
+		// 	} else {
+		// 		// echo "<script>alert('Failed to sending message!')</script>";
+		// 		$status = 2;
+		// 		$redirect = '';
+		// 		$message = "Kegagalan Server!";
+		// 	}
+		// }
+		$status = 1;
+		$redirect = "/auth/activate";
+		$message = "Aktivasi akun dengan kode di SMS kamu!";
 
 		$resx['status'] = $status;
 		$resx['message'] = $message;
