@@ -157,7 +157,7 @@ class Profile extends CI_Controller {
 	    $data['id_user'] = $post['id_user'];
 	    $data['saldo'] = 50000;
 	    $data['tipe'] = 'Debit';
-	    $data['keterangan'] = 'Pendaftaran VIP '.$_dateNow. ' s/d '.$_dateExp;
+	    $data['keterangan'] = 'VIP '.$_dateNow. ' s/d '.$_dateExp;
 	    $data['waktu'] = date('Y-m-d H:i:s');
 		$this->db->insert('transaction_saldo', $data);
 
@@ -178,6 +178,38 @@ class Profile extends CI_Controller {
 		echo json_encode($resx);
 	}
 
+	public function setOnline() {
+		$post = $this->input->post();
+
+	    $where['id_user'] = $post['id_user'];
+
+	    $update['online'] = 1;
+		$this->db->where($where);
+		$this->db->update('user', $update);
+
+		$this->db->where($where);
+		$data = $this->db->get('user')->row();
+
+		$resx['data'] = $data;
+		echo json_encode($resx);
+	}
+
+	public function setOffline() {
+		$post = $this->input->post();
+
+	    $where['id_user'] = $post['id_user'];
+
+	    $update['online'] = 0;
+		$this->db->where($where);
+		$this->db->update('user', $update);
+
+		$this->db->where($where);
+		$data = $this->db->get('user')->row();
+
+		$resx['data'] = $data;
+		echo json_encode($resx);
+	}
+
 	public function normalizeVIP() {
 		$post = $this->input->post();
 
@@ -192,6 +224,39 @@ class Profile extends CI_Controller {
 		$data = $this->db->get('user')->row();
 
 		$resx['data'] = $data;
+		echo json_encode($resx);
+	}
+
+	public function cari_teman() {
+		$post = $this->input->post();
+
+   		$this->db->where_not_in('id_user', array($post['id_user']));
+   		if ($this->input->post('kota')) {
+   			$this->db->where('kota', $post['kota']);
+   		} elseif ($this->input->post('provinsi')) {
+   			$this->db->where('provinsi', $post['provinsi']);
+   		} elseif ($this->input->post('vip') === '0') {
+   			$this->db->where('vip', 0);
+   		}
+   		$this->db->limit($post['limit_row'], $post['limit_from']);
+     	$data = $this->db->get('v_user')->result();
+
+   		if ($this->input->post('kota')) {
+   			$this->db->where('kota', $post['kota']);
+   		} elseif ($this->input->post('provinsi')) {
+   			$this->db->where('provinsi', $post['provinsi']);
+   		} elseif ($this->input->post('vip') === '0') {
+   			$this->db->where('vip', 0);
+   		}
+   		$this->db->where_not_in('id_user', array($post['id_user']));
+     	$total = $this->db->get('v_user')->num_rows();
+
+		$resx['status'] = 1;
+		$resx['message'] = "";
+		$resx['data'] = $data;
+		$resx['total'] = $total;
+		$resx['code'] = 0;
+		$resx['redirect'] = '';
 		echo json_encode($resx);
 	}
 

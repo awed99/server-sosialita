@@ -2,6 +2,8 @@ CREATE VIEW v_mutasi_transaksi as
 SELECT 
 	id_user as id_user,
 	'Kredit' as tipe,
+	id_transaction_isi_saldo as id_transaction,
+	'transaction_isi_saldo' as tabel,
     status as status,
 	nominal as nominal,
 	biaya as biaya,
@@ -14,6 +16,8 @@ UNION ALL
 SELECT 
 	id_user as id_user,
 	'Debit' as tipe,
+	id_transaction_tarik_saldo as id_transaction,
+	'transaction_tarik_saldo' as tabel,
     status as status,
 	amount as nominal,
 	biaya as biaya,

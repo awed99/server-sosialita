@@ -17,7 +17,7 @@ class Callback extends CI_Controller {
 	}
 
 	public function fva() {
-		// https://pacaran.indobeneficiadigital.com/callback/fva
+		// https://sosialita.indobeneficiadigital.com/callback/fva
 		$data = json_decode(file_get_contents('php://input'), true);
 		$data['id_user'] = explode('#', $data['external_id'])[0];
 		$this->db->insert('callback_fva', $data);
@@ -36,7 +36,7 @@ class Callback extends CI_Controller {
 	}
 
 	public function disbursement() {
-		// https://pacaran.indobeneficiadigital.com/callback/disbursement
+		// https://sosialita.indobeneficiadigital.com/callback/disbursement
 		$data = json_decode(file_get_contents('php://input'), true);
 		$data['id_user'] = explode('#', $data['external_id'])[0];
 		$data['failure_code'] = str_replace('_', ' ', $data['failure_code']);

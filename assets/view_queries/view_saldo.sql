@@ -2,6 +2,7 @@ CREATE VIEW v_mutasi_saldo as
 SELECT 
 	id_user as id_user,
 	tipe as tipe,
+	'' as transfer_user,
 	saldo as nominal,
 	'Transaksi Saldo' as metode,
 	waktu as waktu,
@@ -11,6 +12,7 @@ UNION ALL
 SELECT 
 	id_user as id_user,
 	'Kredit' as tipe,
+	'' as transfer_user,
 	nominal as nominal,
 	bank_code as metode,
 	created_date as waktu,
@@ -21,6 +23,7 @@ UNION ALL
 SELECT 
 	id_user as id_user,
 	'Debit' as tipe,
+	'' as transfer_user,
 	amount as nominal,
 	bank_code as metode,
 	updated_date as waktu,
@@ -31,6 +34,7 @@ UNION ALL
 SELECT 
 	id_user_penerima as id_user,
 	'Kredit' as tipe,
+	name_pengirim as transfer_user,
 	saldo as nominal,
 	'Transfer Saldo' as metode,
 	waktu as waktu,
@@ -41,6 +45,7 @@ UNION ALL
 SELECT 
 	id_user_pengirim as id_user,
 	'Debit' as tipe,
+	name_penerima as transfer_user,
 	saldo as nominal,
 	'Transfer Saldo' as metode,
 	waktu as waktu,
